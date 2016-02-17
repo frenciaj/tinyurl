@@ -1,24 +1,38 @@
 <h1>Tiny URL</h1>
 
-<table>
+<table class="table table-hover">
   <tr>
+    <th>ID</th>
     <th>Long URL</th>
     <th>Short URL</th>
-    <th></th>
-    <th></th>
+    <th>Show</th>
+    <th>Edit</th>
+    <th>Delete</th>
   </tr>
 
 <% @shorts.each do |short| %>
   <tr>
+    <td><%= short.id %></td>
     <td><%= link_to short.long, short.long %></td>
     <td><%= link_to short.tiny, short.long %></td>
-    <td><%= link_to 'Show', short %></td>
-    <td><%= link_to 'Edit', edit_short_path(short) %></td>
-    <td><%= link_to 'Destroy', short, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to short do%>
+    <span class="glyphicon glyphicon-search"></span>
+    <%end%>
+    </td>
+    <td><%= link_to edit_short_path(short) do %>
+      <span class="glyphicon glyphicon-pencil"></span>
+      <%end%>
+      </td>
+    <td><%= link_to short, method: :delete, data: { confirm: 'Are you sure?' } do %>
+    <span class="glyphicon glyphicon-trash"></span>
+    <%end%>
+    </td>
   </tr>
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Short', new_short_path %>
+<hr>
+<p id="text"><b>you can visit the webpage by clicking on show or https://desolate-anchorage-97837.herokuapp.com/shorts/[id] or https://desolate-anchorage-97837.herokuapp.com/url/[short url]</b></p>
+<div class="button">
+<button class='btn btn-success'><%= link_to 'New URL', new_short_path, class: 'btnn'%></button>
+</div>

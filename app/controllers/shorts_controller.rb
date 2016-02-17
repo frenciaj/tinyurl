@@ -1,5 +1,6 @@
 class ShortsController < ApplicationController
   before_action :set_url, only: [:show, :edit, :update, :destroy]
+   before_action :set_url_tiny, only: :show_tiny
 
   def index
     @shorts = Short.all
@@ -7,6 +8,11 @@ class ShortsController < ApplicationController
   end
 
   def show
+    redirect_to @short.long
+  end
+
+  def show_tiny
+    redirect_to @short.long
   end
 
 	# GET /shorts/new
@@ -20,9 +26,7 @@ class ShortsController < ApplicationController
   # POST /shorts
   def create
     @short = Short.new(short_params)
-    value = ('0'..'9').to_a + %w(b c d f g h j k l m n p q r s t v w x y z) + %w(B C D F G H J K L M N P Q R S T V W X Y Z - _)
-    @short.tiny = value.sample(6).join
-
+    urlgenerator
     respond_to do |format|
       if @short.save
         format.html { render action: "show" }
@@ -44,7 +48,16 @@ class ShortsController < ApplicationController
     @short = Short.find(params[:id])
   end
 
+  def set_url_tiny
+  @short = Short.find_by_tiny(params[:tiny])
+  end
+
   def short_params
       params.require(:short).permit(:long)
   end
+def urlgenerator
+  value = ('0'..'9').to_a + %w(b c d f g h j k l m n p q r s t v w x y z) + %w(B C D F G H J K L M N P Q R S T V W X Y Z - _)
+  @short.tiny = value.sample(6).join
+end
+
 end

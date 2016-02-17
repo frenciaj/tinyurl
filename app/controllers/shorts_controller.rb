@@ -19,7 +19,7 @@ class ShortsController < ApplicationController
   # POST /shorts
   def create
     @short = Short.new(short_params)
-
+    @short.tiny = @short.long.to_i(36)
     respond_to do |format|
       if @short.save
         format.html { render action: "show" }
@@ -27,7 +27,6 @@ class ShortsController < ApplicationController
         format.html { render action: "new" }
       end
     end
-    puts "Estoy creando2"
   end
   def destroy
       @short.destroy

@@ -1,7 +1,7 @@
 class Short < ActiveRecord::Base
 
-def shorten_url
-  @shorten = @short.(36)
+def self.shorten_url
+  @short.tiny = @short.to_i(36)
 end
 
 end

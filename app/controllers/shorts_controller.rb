@@ -3,6 +3,7 @@ class ShortsController < ApplicationController
 
   def index
     @shorts = Short.all
+
   end
 
   def show
@@ -19,7 +20,9 @@ class ShortsController < ApplicationController
   # POST /shorts
   def create
     @short = Short.new(short_params)
-    @short.tiny = @short.long.to_i(36)
+    value = ('0'..'9').to_a + %w(b c d f g h j k l m n p q r s t v w x y z) + %w(B C D F G H J K L M N P Q R S T V W X Y Z - _)
+    @short.tiny = value.sample(6).join
+
     respond_to do |format|
       if @short.save
         format.html { render action: "show" }
